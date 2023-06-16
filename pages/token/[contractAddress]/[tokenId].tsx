@@ -1,10 +1,12 @@
 import { GetStaticProps, GetStaticPaths } from "next";
 import { NFT, ThirdwebSDK } from "@thirdweb-dev/sdk";
 import { ThirdwebNftMedia, useAddress, useWallet } from "@thirdweb-dev/react";
-import { nftDropAddress, activeChain } from "../../const/constants";
+import { nftDropAddress, activeChain } from "../../../const/constants";
 import styles from "../../../styles/Home.module.css";
 import { Signer } from "ethers";
 import { useEffect, useState } from "react";
+import SmartWalletConnected from "../../../components/SmartWallet/SmartWalletConnected"
+import newSmartWallet from "../../../components/SmartWallet/SmartWallets";
 
 type Props = {
   nft: NFT;
@@ -19,7 +21,7 @@ export default function Token({ nft }: Props) {
   const address = useAddress();
   const wallet = useWallet();
   useEffect(() => {
-    const createSmartWallet = async () => {
+    const createSmartWallet = async (nft:NFT) => {
       if (nft && smartWalletAddress == null && address && wallet) {
         const smartWallet = newSmartWallet(nft);
 
@@ -46,7 +48,10 @@ export default function Token({ nft }: Props) {
           <p>Token Id: {nft.metadata.id}</p>
         </div>
       )}
-      {smartWalletAddress ? <SmartWalletConnected /> : <p> Loading .... </p>}
+      {smartWalletAddress ? 
+      <SmartWalletConnected 
+        signer = {signer}  
+      /> : <p> Loading .... </p>}
     </div>
   );
 }
