@@ -18,10 +18,6 @@ interface ConnectedProps {
   signer: Signer | undefined;
 }
 
-interface ConnectedProps {
-  signer: Signer | undefined;
-}
-
 const SmartWalletConnected: React.FC<ConnectedProps> = ({ signer }) => {
   return (
     <ThirdwebSDKProvider signer={signer} activeChain={activeChain}>

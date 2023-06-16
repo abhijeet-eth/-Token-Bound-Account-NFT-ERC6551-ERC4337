@@ -5,7 +5,7 @@ import { nftDropAddress, activeChain } from "../../../const/constants";
 import styles from "../../../styles/Home.module.css";
 import { Signer } from "ethers";
 import { useEffect, useState } from "react";
-import SmartWalletConnected from "../../../components/SmartWallet/SmartWalletConnected"
+import SmartWalletConnected from "../../../components/SmartWallet/SmartWalletConnected";
 import newSmartWallet from "../../../components/SmartWallet/SmartWallets";
 
 type Props = {
@@ -21,7 +21,7 @@ export default function Token({ nft }: Props) {
   const address = useAddress();
   const wallet = useWallet();
   useEffect(() => {
-    const createSmartWallet = async (nft:NFT) => {
+    const createSmartWallet = async (nft: NFT) => {
       if (nft && smartWalletAddress == null && address && wallet) {
         const smartWallet = newSmartWallet(nft);
 
@@ -31,13 +31,14 @@ export default function Token({ nft }: Props) {
         setSigner(await smartWallet.getSigner());
 
         setSmartWalletAddress(await smartWallet.getAddress());
+        console.log("ll", smartWalletAddress);
 
         return smartWallet;
       } else {
         console.log("Wallet not created");
       }
-      createSmartWallet(nft);
     };
+    createSmartWallet(nft);
   }, [nft, smartWalletAddress, address, wallet]);
   return (
     <div className={styles.conatiners}>
@@ -48,10 +49,11 @@ export default function Token({ nft }: Props) {
           <p>Token Id: {nft.metadata.id}</p>
         </div>
       )}
-      {smartWalletAddress ? 
-      <SmartWalletConnected 
-        signer = {signer}  
-      /> : <p> Loading .... </p>}
+      {smartWalletAddress ? (
+        <SmartWalletConnected signer={signer} />
+      ) : (
+        <p> Loading .... </p>
+      )}
     </div>
   );
 }
