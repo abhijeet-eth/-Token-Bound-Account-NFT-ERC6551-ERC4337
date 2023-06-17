@@ -19,6 +19,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
+        <h1>Token Bound Account NFT - ERC6551 + ERC4337</h1>
         <ConnectWallet />
         {!address ? (
           <p className={styles.description}>
